@@ -1,27 +1,39 @@
-import React, {useState, useEffect} from 'react';
-import {Text, View, FlatList} from 'react-native';
+import React from 'react';
+import {Text, View, FlatList, ActivityIndicator} from 'react-native';
 import Config from 'react-native-config';
-import axios from 'axios';
 
-const Categories = () => {
-  const [data, setData] = useState([]);
+import CategoryCard from '../../Components/Card/CategoryCard/CategoryCard';
+import Loading from '../../Components/Loading/Loading';
+import Error from '../../Components/Error/Error';
+import useFetch from '../../Hooks/useFetch/useFetch';
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+const Categories = ({navigation}) => {
+  const {loading, data, error} = useFetch(Config.API_URL_CATEGORIES);
 
-  const fetchData = async () => {
-    const {data: categoryData} = await axios.get(Config.API_URL);
-    setData(categoryData);
+  const handleCategorySelect = strCategory => {
+    navigation.navigate('MealsPage', {strCategory});
   };
 
   function renderCategory({item}) {
-    return <Text>{item.strCategory}</Text>;
+    return (
+      <CategoryCard
+        category={item}
+        onSelect={() => handleCategorySelect(item.strCategory)}
+      />
+    );
+  }
+
+  if (error) {
+    return <Error />;
+  }
+
+  if (loading) {
+    return <Loading />;
   }
 
   return (
-    <View>
-      <FlatList data={data} renderItem={renderCategory} />
+    <View style={{backgroundColor: 'orange'}}>
+      <FlatList data={data.categories} renderItem={renderCategory} />
     </View>
   );
 };

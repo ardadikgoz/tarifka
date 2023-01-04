@@ -12,9 +12,35 @@ const Router = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="CategoriesPage" component={Categories} />
-        <Stack.Screen name="MealsPage" component={Meals} />
-        <Stack.Screen name="DetailsPage" component={Details} />
+        <Stack.Screen
+          name="CategoriesPage"
+          component={Categories}
+          options={{
+            title: 'Categories',
+            headerTitleAlign: 'center',
+            headerTitleStyle: {color: 'orange'},
+          }}
+        />
+        <Stack.Screen
+          name="MealsPage"
+          component={Meals}
+          options={{
+            title: 'Meals',
+            headerTitleAlign: 'center',
+            headerTitleStyle: {color: 'orange'},
+            headerTintColor: 'orange',
+          }}
+        />
+        <Stack.Screen
+          name="DetailsPage"
+          component={Details}
+          options={{
+            title: 'Details',
+            headerTitleAlign: 'center',
+            headerTitleStyle: {color: 'orange'},
+            headerTintColor: 'orange',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
